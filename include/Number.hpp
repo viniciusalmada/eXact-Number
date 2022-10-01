@@ -7,7 +7,6 @@
 
 namespace XNum
 {
-
   class Number
   {
   public:
@@ -17,7 +16,6 @@ namespace XNum
   private:
     PIMPL
   };
-
 } // XNum
 
 #endif // XNUM_NUMBER_HPP

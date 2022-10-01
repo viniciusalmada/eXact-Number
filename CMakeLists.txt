@@ -3,7 +3,7 @@ project(XNum)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(XNum include/Number.cpp include/Number.hpp include/StringUtils.cpp include/StringUtils.hpp)
+add_library(XNum src/Number.cpp include/Number.hpp src/StringUtils.cpp include/StringUtils.hpp)
 target_include_directories(XNum PRIVATE include)
 target_compile_features(XNum PRIVATE cxx_std_20)
 target_precompile_headers(XNum PRIVATE include/xnumpch.hpp)
