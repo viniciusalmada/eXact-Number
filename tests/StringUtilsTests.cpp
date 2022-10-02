@@ -4,27 +4,55 @@
 
 #include "StringUtils.hpp"
 
-TEST(StringUtils, StartWithSeparator)
+TEST(StringUtils, ConvertToIntegerWithExp)
 {
-  std::string str = ".012";
-  std::vector<std::string> res = XNum::StringUtils::SplitDecNumber(str);
-  // Expect two strings to be equal.
-  EXPECT_EQ(res[0], "0");
-  EXPECT_EQ(res[1], "012");
-}
-
-TEST(StringUtils, StartWithSeparatorAndHasTwoSeparators)
-{
-  std::string str = ".0.1";
-  std::vector<std::string> res = XNum::StringUtils::SplitDecNumber(str);
-
-  EXPECT_TRUE(res.empty());
-}
-
-TEST(StringUtils, StartWithSeparatorAndHasMultipleSeparators)
-{
-  std::string str = ".0.....123";
-  std::vector<std::string> res = XNum::StringUtils::SplitDecNumber(str);
-
-  EXPECT_TRUE(res.empty());
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("123.143");
+    
+    EXPECT_FALSE(is_neg);
+    EXPECT_EQ(num, 123143);
+    EXPECT_EQ(exp, 3);
+  }
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("-123.143");
+    
+    EXPECT_TRUE(is_neg);
+    EXPECT_EQ(num, 123143);
+    EXPECT_EQ(exp, 3);
+  }
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("-123.01143");
+    
+    EXPECT_TRUE(is_neg);
+    EXPECT_EQ(num, 12301143);
+    EXPECT_EQ(exp, 5);
+  }
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("-123.0114300");
+    
+    EXPECT_TRUE(is_neg);
+    EXPECT_EQ(num, 12301143);
+    EXPECT_EQ(exp, 5);
+  }
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("-123.011430020");
+    
+    EXPECT_TRUE(is_neg);
+    EXPECT_EQ(num, 12301143002);
+    EXPECT_EQ(exp, 8);
+  }
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("-123011430020");
+    
+    EXPECT_TRUE(is_neg);
+    EXPECT_EQ(num, 123011430020);
+    EXPECT_EQ(exp, 0);
+  }
+  {
+    auto [is_neg, num, exp] = XNum::StringUtils::ConvertToIntegerWithExp("-0.123011430020");
+    
+    EXPECT_TRUE(is_neg);
+    EXPECT_EQ(num, 12301143002);
+    EXPECT_EQ(exp, 11);
+  }
 }

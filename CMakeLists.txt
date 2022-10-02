@@ -22,8 +22,16 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+# String Utils tests
 add_executable(StringUtilsTests tests/StringUtilsTests.cpp)
 target_include_directories(StringUtilsTests PRIVATE include)
 target_link_libraries(StringUtilsTests PRIVATE GTest::gtest_main PRIVATE XNum)
+
+# XNum::Number tests
+add_executable(XNumberTests tests/XNumberTests.cpp)
+target_include_directories(XNumberTests PRIVATE include)
+target_link_libraries(XNumberTests PRIVATE GTest::gtest_main PRIVATE XNum)
+
 include(GoogleTest)
 gtest_discover_tests(StringUtilsTests)
+gtest_discover_tests(XNumberTests)
