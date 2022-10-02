@@ -17,6 +17,8 @@ namespace XNum
 }
 
 using ULong = uint64_t;
+using UInt = uint32_t;
+using Int = int32_t;
 
 #define PIMPL                                                                                                          \
   class Implementation;                                                                                                \

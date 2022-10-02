@@ -10,8 +10,11 @@ namespace XNum
   class Number
   {
   public:
-    Number(std::string&& num);
+    explicit Number(std::string&& num);
     ~Number();
+
+    const ULong& GetNumerator() const;
+    const ULong& GetDenominator() const;
 
   private:
     PIMPL

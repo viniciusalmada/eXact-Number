@@ -1,7 +1,9 @@
 #ifndef XNUM_PCH_HPP
 #define XNUM_PCH_HPP
 
-#include <string>
+#include <cmath>
 #include <cstdint>
+#include <numeric>
+#include <string>
 
 #endif // XNUM_PCH_HPP
