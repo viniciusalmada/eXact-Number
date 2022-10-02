@@ -11,10 +11,23 @@ namespace XNum
   {
   public:
     explicit Number(std::string&& num);
+    Number(ULong numerator, ULong denominator, bool isNeg = false);
+    Number(const Number& other);
     ~Number();
 
-    const ULong& GetNumerator() const;
-    const ULong& GetDenominator() const;
+    Number& operator=(Number other);
+
+    [[nodiscard]] const ULong& Numerator() const;
+    [[nodiscard]] const ULong& Denominator() const;
+    [[nodiscard]] bool IsPositive() const;
+    [[nodiscard]] bool IsNegative() const;
+    Number Inverse() const;
+
+    Number operator-() const;
+    Number operator+(const Number& other) const;
+    Number operator-(const Number& other) const;
+    Number operator*(const Number& other) const;
+    Number operator/(const Number& other) const;
 
   private:
     PIMPL
