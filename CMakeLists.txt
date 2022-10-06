@@ -5,8 +5,13 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(XNum src/Number.cpp include/Number.hpp src/StringUtils.cpp include/StringUtils.hpp)
 target_include_directories(XNum PRIVATE include)
-target_compile_features(XNum PRIVATE cxx_std_20)
 target_precompile_headers(XNum PRIVATE include/xnumpch.hpp)
+
+# Set up app
+add_executable(App app/main.cpp)
+target_include_directories(App PRIVATE include)
+target_precompile_headers(App REUSE_FROM XNum)
+target_link_libraries(App PRIVATE XNum)
 
 # Set up Google Test
 include(FetchContent)
