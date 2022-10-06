@@ -65,23 +65,23 @@ namespace XNum
       Reduce();
     }
 
-    explicit Implementation(bool isNeg, ULong numerator, ULong denominator) :
-        is_negative(isNeg),
+    explicit Implementation(ULong numerator, ULong denominator, bool isNeg) :
         numerator(numerator),
-        denominator(denominator)
+        denominator(denominator),
+        is_negative(isNeg)
     {
       Reduce();
     }
 
-    bool is_negative = false;
     ULong numerator = 0;
     ULong denominator = 1;
+    bool is_negative = false;
   };
 
   Number::Number(std::string&& num) : impl(CreateUnique<Implementation>(std::move(num))) {}
 
   Number::Number(ULong numerator, ULong denominator, bool isNeg) :
-      impl(CreateUnique<Implementation>(isNeg, numerator, denominator))
+      impl(CreateUnique<Implementation>(numerator, denominator, isNeg))
   {
   }
 
@@ -157,7 +157,7 @@ namespace XNum
     return impl->is_negative && Numerator() != 0;
   }
 
-  Number::Number(const Number& other) : Number(other.IsNegative(), other.Numerator(), other.Denominator()) {}
+  Number::Number(const Number& other) : Number(other.Numerator(), other.Denominator(), other.IsNegative()) {}
 
   Number& Number::operator=(Number other)
   {
@@ -170,9 +170,25 @@ namespace XNum
     return { this->Numerator(), this->Denominator(), !this->IsNegative() };
   }
 
+  std::ostream& operator<<(std::ostream& out, const Number& number)
+  {
+    if (number.Denominator() == 1u)
+      out << number.Numerator();
+    else
+      out << number.Numerator() << '/' << number.Denominator();
+    return out;
+  }
+
+  Number& Number::Inverse()
+  {
+    std::swap(impl->numerator, impl->denominator);
+    return *this;
+  }
+
   Number Number::Inverse() const
   {
-    return { this->Denominator(), this->Numerator(), this->IsNegative() };
+    std::swap(impl->numerator, impl->denominator);
+    return *this;
   }
 
 } // XNum

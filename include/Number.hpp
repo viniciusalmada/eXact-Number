@@ -10,8 +10,8 @@ namespace XNum
   class Number
   {
   public:
-    explicit Number(std::string&& num);
-    Number(ULong numerator, ULong denominator, bool isNeg = false);
+    explicit Number(std::string&& numberDecimal);
+    Number(ULong numerator, ULong denominator = 1, bool isNeg = false);
     Number(const Number& other);
     ~Number();
 
@@ -21,13 +21,16 @@ namespace XNum
     [[nodiscard]] const ULong& Denominator() const;
     [[nodiscard]] bool IsPositive() const;
     [[nodiscard]] bool IsNegative() const;
-    Number Inverse() const;
+    [[nodiscard]] Number Inverse() const;
+    Number& Inverse();
 
     Number operator-() const;
     Number operator+(const Number& other) const;
     Number operator-(const Number& other) const;
     Number operator*(const Number& other) const;
     Number operator/(const Number& other) const;
+
+    friend std::ostream& operator<<(std::ostream&, const Number&);
 
   private:
     PIMPL
